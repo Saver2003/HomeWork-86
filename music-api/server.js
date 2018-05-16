@@ -30,7 +30,6 @@ db.once('open', () => {
   app.use('/users', users());
   app.use('/track_history', track_history());
 
-
   app.listen(port, () => {
     console.log(`Server started on ${port} port!`);
   })

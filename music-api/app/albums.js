@@ -31,7 +31,6 @@ const createRouter = () => {
         .then((results) => res.send(results))
         .catch(() => res.sendStatus(500))
     }
-
   });
 
   router.post('/', upload.single('image'), (req, res) => {
@@ -51,7 +50,6 @@ const createRouter = () => {
   });
 
   router.get('/:id', (req, res) => {
-    // const id = req.params.id;
     Album
       .findOne({_id: (req.params.id)}, function (error, album) {
         if (error) res.status(404).send(error);
