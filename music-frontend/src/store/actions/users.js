@@ -1,6 +1,9 @@
 import axios from '../../axios-api';
 import {push} from 'react-router-redux';
-import {LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS} from "./actionTypes";
+import {
+  LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, REGISTER_USER_FAILURE,
+  REGISTER_USER_SUCCESS
+} from "./actionTypes";
 
 export const registerUserSuccess = () => {
   return {type: REGISTER_USER_SUCCESS};
@@ -44,5 +47,21 @@ export const loginUser = userData => {
         dispatch(loginUserFailure(errorObj));
       }
     )
+  }
+};
+
+export const logoutUser = () => {
+  return (dispatch, getState) => {
+    const token = getState().users.user.token;
+    const headers = {'Token': token};
+    axios.delete('/users/sessions', {headers}).then(
+      response => {
+        dispatch({type: LOGOUT_USER});
+        dispatch(push('/'));
+      },
+      error => {
+        console.log('Could not logout!');
+      }
+    );
   }
 };
